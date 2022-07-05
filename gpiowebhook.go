@@ -35,6 +35,10 @@ func main() {
         io.WriteString(w, "OK!")
     })
 
+    http.HandleFunc("/status", func(w http.ResponseWriter, r *http.Request) {
+        io.WriteString(w, "all good")
+    })
+
     log.Println("Listening on localhost:28384...")
     log.Fatal(http.ListenAndServe("localhost:28384", nil))
 }
