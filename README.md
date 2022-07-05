@@ -1,6 +1,11 @@
+# gpiowebhook
+
+
 This is a tiny HTTP server for toggling Raspberry Pi GPIO pins via HTTP requests.
 
-Usage (run this on Raspberry Pi):
+## Use
+
+Rrun this on Raspberry Pi:
 
     KEY=secretkey ./gpiowebhook
 
@@ -10,9 +15,12 @@ This starts a HTTP server on port 28384. Now make a HTTP request like so:
 
 The server will then set RPi's pin #17 to HIGH, wait 100ms, then set it to LOW.
 
-And that's all :-)
+Hook up something to the pins and you can now control it over HTTP.
+In my case, I jerry-rigged a transmitter of an electric gate opener. The setup
+will need some refinement :-)
 
-Build it for 32-bit ARM:
+![POC](/docs/poc.jpg?raw=true)
+
+## Build
 
     env GOOS=linux GOARCH=arm go build
-
