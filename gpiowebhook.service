@@ -1,0 +1,20 @@
+[Unit]
+Description=GPIO Webhook
+After=network-online.target
+Requires=network-online.target
+
+[Service]
+Slice=machine.slice
+Restart=always
+RestartSec=20
+StartLimitInterval=10
+StartLimitBurst=5
+
+Environment=KEY=FIXME
+ExecStart=/usr/local/bin/gpiowebhook
+
+ProtectHome=true
+ProtectSystem=full
+
+[Install]
+WantedBy=multi-user.target
