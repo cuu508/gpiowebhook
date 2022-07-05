@@ -35,6 +35,6 @@ func main() {
         io.WriteString(w, "OK!")
     })
 
-    log.Println("Listening on port 28384...")
-    log.Fatal(http.ListenAndServe(":28384", nil))
+    log.Println("Listening on localhost:28384...")
+    log.Fatal(http.ListenAndServe("localhost:28384", nil))
 }
