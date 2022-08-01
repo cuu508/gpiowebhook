@@ -1,19 +1,14 @@
 package main
 
-import "github.com/stianeikeland/go-rpio/v4"
 import "log"
 import "io"
 import "net/http"
 import "os"
+import "os/exec"
 import "time"
 
 func main() {
     KEY := os.Getenv("KEY")
-
-    err := rpio.Open()
-    if err != nil {
-        log.Fatalln("Could not initialize rpio: ", err)
-    }
 
     http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
         key := r.URL.Query().Get("key")
@@ -24,12 +19,18 @@ func main() {
         }
 
         go func() {
-            log.Println("Triggering pin 17")
-            pin := rpio.Pin(17)
-            pin.Output()
-            pin.High()
+            log.Println("Triggering pin 11")
+            cmd := exec.Command("mraa-gpio", "set", "11", "1")
+            if err := cmd.Run(); err != nil {
+                log.Fatal(err)
+            }
+
             time.Sleep(time.Millisecond * 100)
-            pin.Low()
+
+            cmd = exec.Command("mraa-gpio", "set", "11", "0")
+            if err := cmd.Run(); err != nil {
+                log.Fatal(err)
+            }
         }()
 
         io.WriteString(w, "OK!")
